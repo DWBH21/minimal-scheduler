@@ -12,8 +12,8 @@ This short tutorial covers the basics; to learn more, visit the resources from t
 
 Requirements
 ------------
-We need a 6.12 kernel or a patched 6.11 kernel to build a custom scheduler.
-You can get a kernel patched with the scheduler extensions on Ubuntu 24.10 from 
+We need a 6.13 or younger kernel.
+You can get a kernel patched with the scheduler extensions on Ubuntu 25.04 and older from 
 [here](https://launchpad.net/~arighi/+archive/ubuntu/sched-ext-unstable),
 or you can use [CachyOS](https://cachyos.org/) and install a patched kernel from there.
 
@@ -64,12 +64,6 @@ The scheduler code only depends on the Linux bpf kernel headers and sched-ext. S
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_tracing.h>
 
-// We use the new names from 6.13 to avoid confusion
-#define scx_bpf_dsq_insert scx_bpf_dispatch
-#define scx_bpf_dsq_insert_vtime scx_bpf_dispatch_vtime
-#define scx_bpf_dsq_move_to_local scx_bpf_consume
-#define scx_bpf_dsq_move scx_bpf_dispatch_from_dsq
-#define scx_bpf_dsq_move_vtime scx_bpf_dispatch_vtime_from_dsq
 
 // Define a shared Dispatch Queue (DSQ) ID
 // We use this as our global scheduling queue

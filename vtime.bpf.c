@@ -14,12 +14,6 @@
     SEC("struct_ops.s/"#name)							      \
     BPF_PROG(name, ##args)
 
-// We use the new names from 6.13 to make it more readable
-#define scx_bpf_dsq_insert scx_bpf_dispatch
-#define scx_bpf_dsq_insert_vtime scx_bpf_dispatch_vtime
-#define scx_bpf_dsq_move_to_local scx_bpf_consume
-#define scx_bpf_dsq_move scx_bpf_dispatch_from_dsq
-#define scx_bpf_dsq_move_vtime scx_bpf_dispatch_vtime_from_dsq
 
 #define SLICE SCX_SLICE_DFL
 
