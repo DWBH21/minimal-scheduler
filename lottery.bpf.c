@@ -23,10 +23,11 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(sched_init) {
 // Enqueue a task to the shared DSQ, dispatching it with a time slice
 int BPF_STRUCT_OPS(sched_enqueue, struct task_struct *p, u64 enq_flags) {
     // Calculate the time slice for the task based on the number of tasks in the queue
-    u64 slice = 5000000u / scx_bpf_dsq_nr_queued(SHARED_DSQ_ID);
+    u32 num_processes;
+    u64 slice = 5000000u / (num_processes = (scx_bpf_dsq_nr_queued(SHARED_DSQ_ID) == 0) ? num_processes : 1);
     scx_bpf_dsq_insert(p, SHARED_DSQ_ID, slice, enq_flags);
     return 0;
-}
+}   
 
 // Dispatch a task from the shared DSQ to a CPU
 int BPF_STRUCT_OPS(sched_dispatch, s32 cpu, struct task_struct *prev) {
